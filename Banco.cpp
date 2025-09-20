@@ -7,16 +7,25 @@ void Banco::ListarCuentas()
 	{
 		cout << "No hay cuentas registradas" << endl;
 		return;
+	}else{
+		cout << "--------------Consultar Saldo--------------" << endl;
+		cout << "Numero de cuenta a consultar: ";
+		cin >> numero_cuenta;
+		for (int i = 0; i < CantidadDeCuentas; i++)
+		{
+			if (numerosCuenta[i] == numero_cuenta)
+			{
+				cout << i + 1 << ". Numero de cuenta: " << numerosCuenta[i]
+				<< " | Titular: " << titulares[i]
+				<< " | Saldo: " << saldos[i] << endl;
+			}
+			
+			
+		}
+		cout << "-----------------------------------\n";
 	}
 
-	cout << "\n--- LISTA DE CUENTAS REGISTRADAS ---\n";
-	for (int i = 0; i < CantidadDeCuentas; i++)
-	{
-		cout << i + 1 << ". Numero de cuenta: " << numerosCuenta[i]
-			 << " | Titular: " << titulares[i]
-			 << " | Saldo: " << saldos[i] << endl;
-	}
-	cout << "-----------------------------------\n";
+	
 }
 
 void Banco::CrearCuenta(int numero, string titular, double saldoInicial)
@@ -31,44 +40,17 @@ void Banco::CrearCuenta(int numero, string titular, double saldoInicial)
 }
 
 int Banco::OpsionesMenu()
-{ // mostrando opsiones del menu
-
-/*
-1. Registrar nueva cuenta bancaria
-2. Depositar dinero
-3. Retirar dinero
-4. Transferir fondos
-5. Consultar saldo
-6. Consultar historial de transacciones
-7. Verificar estado de cuenta
-8. Salir
-Ingrese una opción:
-    
-
-
-
-cout << "-----OPSIOENES DEL MENU----" << endl;
-	cout << "1.DEPOSITAR DINERO" << endl;
-	cout << "2.RETIRAR DINERO" << endl;
-	cout << "3.VER ESTADO DE CUENTA" << endl;
-	cout << "4.HISTORIAL DE TRANSACCIONES" << endl;
-	cout << "5.CREAR UNA CUENTA" << endl;
-	cout << "6.LISTAR TODAS LAS CUENTAS" << endl;
-	cout << "7.FINALIZAR PROGRAMA" << endl;
-	cout << "ELIJA UNA OPERACION: ";
-	cin >> opsion;
-*/
-
-
-	cout << "-----OPSIOENES DEL MENU----" << endl;
-	cout << "1.DEPOSITAR DINERO" << endl;
-	cout << "2.RETIRAR DINERO" << endl;
-	cout << "3.VER ESTADO DE CUENTA" << endl;
-	cout << "4.HISTORIAL DE TRANSACCIONES" << endl;
-	cout << "5.CREAR UNA CUENTA" << endl;
-	cout << "6.LISTAR TODAS LAS CUENTAS" << endl;
-	cout << "7.FINALIZAR PROGRAMA" << endl;
-	cout << "ELIJA UNA OPERACION: ";
+{ 
+	cout << "-----Opciones del Menu----" << endl;
+	cout << "1. Registrar nueva cuenta bancaria" << endl;
+	cout << "2. Depositar dinero" << endl;
+	cout << "3. Retirar dinero" << endl;
+	cout << "4. Transferir fondos" << endl;
+	cout << "5. Consultar saldo" << endl;
+	cout << "6. Consultar historial de transacciones" << endl;
+	cout << "7. Verificar estado de cuenta" << endl;
+	cout << "8. Salir" << endl;
+	cout << "Ingrese una opcion: ";
 	cin >> opsion;
 	return opsion;
 }
@@ -81,15 +63,17 @@ void Banco::FinalizarPrograma()
 
 void Banco::DepositarDinero()
 { // para depositar
+	int numeroCuentaAdepositar;
+	double Cantidad;
+	int Buscando = -1;
+
 	if (CantidadDeCuentas == 0)
 	{
 		cout << "No hay cuentas para depositar" << endl;
 		return;
 	}
 
-	int numeroCuentaAdepositar;
-	double Cantidad;
-	int Buscando = -1;
+	
 
 	cout << "Ingrese el numero de la cuenta a depositar: ";
 	cin >> numeroCuentaAdepositar;
@@ -127,15 +111,16 @@ void Banco::DepositarDinero()
 
 void Banco::RetirarDinero()
 {
+	int numeroCuentaAretirar;
+	double Cantidad;
+	int Buscando = -1;
+
 	if (CantidadDeCuentas == 0)
 	{
 		cout << "No hay cuentas para retirar" << endl;
 		return;
 	}
 
-	int numeroCuentaAretirar;
-	double Cantidad;
-	int Buscando = -1;
 
 	cout << "Ingrese el numero de la cuenta  a  Retirar: ";
 	cin >> numeroCuentaAretirar;
@@ -173,15 +158,13 @@ void Banco::RetirarDinero()
 
 void Banco::EstadoDeCuenta()
 {
+	int findCuenta;
+	int indice = -1;
 	if (CantidadDeCuentas == 0)
 	{
 		cout << "No hay ninguna cuenta." << endl;
 		return;
 	}
-
-	int findCuenta;
-	int indice = -1;
-
 	cout << "Ingrese el numero de la cuenta para verificarla: ";
 	cin >> findCuenta;
 
@@ -212,53 +195,138 @@ void Banco::EstadoDeCuenta()
 
 void Banco::CondicionMenu()
 { // opsiones elijiendo  del menu
-	if (opsion == 7)
+	int numACrear;
+	switch (opsion)
 	{
-		cout << "--------------PROGRAMA FINALIZADO--------------" << endl;
-		FinalizarPrograma();
-	}
-	else if (opsion == 1)
-	{
-		cout << "--------------DEPOSITAR DINERO--------------" << endl;
-		DepositarDinero();
-	}
-	else if (opsion == 2)
-	{
-		cout << "--------------RETIRAR DINERO--------------" << endl;
-		RetirarDinero(); // retirando
-	}
-
-	else if (opsion == 3)
-	{
-		cout << "--------------VER ESTADO DE CUENTA--------------" << endl;
-		EstadoDeCuenta();
-	}
-	else if (opsion == 4)
-	{
-		cout << "--------------HISTORIAL DE TRANSACCIONES--------------" << endl;
-	}
-	else if (opsion == 5)
-	{
-		cout << "--------------REGISTRAR CUENTA--------------" << endl;
-		int numACrear;
-		cout << "Numero de cuenstas a crear: ";
+	case 1:
+		cout << "--------------Registrar Cuenta--------------" << endl;
+		cout << "Numero de cuentas a crear: ";
 		cin >> numACrear;
+		
 
 		for (int i = 0; i < numACrear; i++)
 		{
-			cout << "NUMERO DE LA CUENTA: ";
+			cout << "Numero de la cuenta: ";
 			cin >> numero_cuenta;
-			cout << "NNOMBRE DEL TITULAR: ";
+			cout << "Nombre del titular de la cuenta: ";
 			cin >> nombre_titular;
-			cout << "INGRESE EL SALDO INICIAL EN LEMPIRAS: ";
+			cout << "Ingrese el saldo inicial: ";
 			cin >> saldo_inicial;
+
 			CrearCuenta(numero_cuenta, nombre_titular, saldo_inicial);
 		}
-	}
-	else if (opsion == 6)
-	{
-		cout << "--------------LISTANDO CUENTAS--------------" << endl;
-		cout << endl;
+		break;
+	case 2:
+		//--------------Depositar Dinero--------------
+		DepositarDinero();
+		break;
+	case 3:
+		// --------------Retirar Dinero--------------
+		RetirarDinero(); // retirando
+		break;
+	case 4:
+		//--------------Transferir Dinero--------------
+		TransferirDinero();
+		break;
+	case 5:
+		//--------------Consultar Saldo--------------"
 		ListarCuentas();
+		break;
+	case 6:
+		cout << "--------------Historial de Transacciones--------------" << endl;
+		// Pendiente de Agregar
+		break;
+	case 7:
+		cout << "--------------Verificar Estado de Cuenta--------------" << endl;
+		EstadoDeCuenta();
+		break;
+	case 8:
+		cout << "--------------Programa Finalizado--------------" << endl;
+		FinalizarPrograma();
+		break;
+	default:
+		cout << "--------------Opcion invalida--------------" << endl;
+		break;
 	}
+}
+
+void Banco::TransferirDinero()
+{
+	int cuentaOrigen, cuentaDestino;
+	double monto;
+	int indiceOrigen = -1;  
+	int indiceDestino = -1; 
+
+	if (CantidadDeCuentas < 2)
+	{
+		cout << "Se necesitan al menos dos cuentas para realizar una transferencia." << endl;
+		return;
+	}
+
+	cout << "Ingrese el numero de la cuenta de origen: ";
+	cin >> cuentaOrigen;
+
+	for (int i = 0; i < CantidadDeCuentas; i++)
+	{
+		if (numerosCuenta[i] == cuentaOrigen)
+		{
+			indiceOrigen = i;
+			break;
+		}
+	}
+
+	if (indiceOrigen == -1)
+	{
+		cout << "La cuenta de origen no existe." << endl;
+		return;
+	}
+
+	cout << "Ingrese el numero de la cuenta de destino: ";
+	cin >> cuentaDestino;
+
+	for (int i = 0; i < CantidadDeCuentas; i++)
+	{
+		if (numerosCuenta[i] == cuentaDestino)
+		{
+			indiceDestino = i;
+			break;
+		}
+	}
+
+	if (indiceDestino == -1)
+	{
+		cout << "La cuenta de destino no existe." << endl;
+		return;
+	}
+
+	if (indiceOrigen == indiceDestino)
+	{
+		cout << "La cuenta de origen y destino no pueden ser la misma." << endl;
+		return;
+	}
+
+	cout << "Monto a transferir: ";
+	cin >> monto;
+
+	if (monto <= 0)
+	{
+		cout << "Monto no valido. Debe ser mayor que cero." << endl;
+		return;
+	}
+
+	if (saldos[indiceOrigen] < monto)
+	{
+		cout << "Saldo insuficiente en la cuenta de origen para realizar la transferencia." << endl;
+		return;
+	}
+
+	// 6. Ejecutar la transferencia (combinación de Retirar y Depositar)
+	saldos[indiceOrigen] -= monto;   // Lógica de RetirarDinero()
+	saldos[indiceDestino] += monto;  // Lógica de DepositarDinero()
+
+	cout << "----------------------------------" << endl;
+	cout << "Transferencia realizada con exito." << endl;
+	cout << "Nuevo saldo en cuenta origen (" << cuentaOrigen << "): " << saldos[indiceOrigen] << endl;
+	cout << "Nuevo saldo en cuenta destino (" << cuentaDestino << "): " << saldos[indiceDestino] << endl;
+	cout << "----------------------------------" << endl;
 }

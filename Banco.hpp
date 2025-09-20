@@ -34,6 +34,7 @@ public:
 		void RetirarDinero(); //retirar dinero
 		void EstadoDeCuenta();
 		void HistorialTransacciones();
+		void TransferirDinero();
 
 
 };
