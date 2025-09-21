@@ -1,50 +1,55 @@
-#include "Banco.hpp"
-using namespace std;
 
+
+#include "Banco.hpp"
 
 void Banco::RetirarDinero()
-{
+{ // para depositar
 	int numeroCuentaAretirar;
 	double Cantidad;
-	int Buscando = -1;
 
 	if (CantidadDeCuentas == 0)
 	{
+		cout << "----------------------------------" << endl;
 		cout << "No hay cuentas para retirar" << endl;
+		cout << "----------------------------------" << endl;
 		return;
 	}
-
-
-	cout << "Ingrese el numero de la cuenta  a  Retirar: ";
+	system("cls");
+	cout << "--------------Realizar Retiro--------------" << endl;
+	cout << "Ingrese el numero de la cuenta a retiro: ";
 	cin >> numeroCuentaAretirar;
 
 	for (int i = 0; i < CantidadDeCuentas; i++)
 	{
 		if (numerosCuenta[i] == numeroCuentaAretirar)
 		{
-			Buscando = i;
-			break;
+			cout << "Monto a retirar: ";
+			cin >> Cantidad;
+			if (Cantidad == 0)
+			{
+				cout << "----------------------------------" << endl;
+				cout << "Error: Monto no valido" << endl;
+				cout << "----------------------------------" << endl;
+				i--;
+			}
+			else
+			{
+				saldos[i] -= Cantidad;
+				agregarTransaccion(numeroCuentaAretirar, Cantidad, 0.0, saldos[i]);
+				cout << "----------------------------------" << endl;
+				cout << "El Retiro se realizo con exito" << endl;
+				cout << "A nombre de: " << titulares[i] << endl;
+				cout << "Un monto de L. : " << Cantidad << endl;
+				cout << "Nuevo Saldo: L. " << saldos[i] << endl;
+				cout << "----------------------------------" << endl;
+				break;
+			}
 		}
-	}
-	if (Buscando == -1)
-	{
-		cout << "La cuenta no existe" << endl;
-	}
-	else
-	{
-		cout << "Monto a retirar: ";
-		cin >> Cantidad;
-	}
-
-	if (Cantidad <= 0)
-	{
-		cout << "Monto no valido" << endl;
-		return;
-	}
-	else
-	{
-		// haciendo el deposito
-		saldos[Buscando] -= Cantidad;
-		cout << "El Retiro se realizo con exito" << endl;
+		else
+		{
+			cout << "----------------------------------" << endl;
+			cout << "Error: La cuenta no existe" << endl;
+			cout << "----------------------------------" << endl;
+		}
 	}
 }

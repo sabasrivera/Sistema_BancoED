@@ -4,37 +4,41 @@ using namespace std;
 
 void Banco::EstadoDeCuenta()
 {
-	int findCuenta;
-	int indice = -1;
 	if (CantidadDeCuentas == 0)
 	{
-		cout << "No hay ninguna cuenta." << endl;
+		cout << "----------------------------------" << endl;
+		cout << "No hay cuentas para retirar" << endl;
+		cout << "----------------------------------" << endl;
 		return;
 	}
-	cout << "Ingrese el numero de la cuenta para verificarla: ";
-	cin >> findCuenta;
-
-	for (int i = 0; i < CantidadDeCuentas; i++)
+	else
 	{
-		if (numerosCuenta[i] == findCuenta)
+		system("cls");
+		cout << "--------------Verificar cuenta--------------" << endl;
+		cout << "Numero de cuenta a verificar: ";
+		cin >> numero_cuenta;
+		for (int i = 0; i < CantidadDeCuentas; i++)
 		{
-			indice = i;
-			break;
+			if (numerosCuenta[i] == numero_cuenta)
+			{
+				cout << "----------------------------------" << endl;
+				cout << "Titular: " << titulares[i] << endl;
+				cout << "Numero de cuenta: " << numerosCuenta[i] << endl;
+				cout << "Saldo actual: " << saldos[i] << endl;
+				cout << "----------------------------------" << endl;
+
+				if (saldos[i] < 0)
+				{
+					cout << "Advertencia: La cuenta esta en negativo" << endl;
+					cout << "----------------------------------" << endl;
+				}
+			}
+			else
+			{
+				cout << "----------------------------------" << endl;
+				cout << "Error: La cuenta no existe" << endl;
+				cout << "----------------------------------" << endl;
+			}
 		}
 	}
-	if (indice == -1)
-	{
-		cout << "La cuenta no existe" << endl;
-		return;
-	}
-	cout << "--------------------------------" << endl;
-	cout << "Titular: " << titulares[indice] << endl;
-	cout << "Numero de cuenta: " << numerosCuenta[indice] << endl;
-	cout << "Saldo actual: " << saldos[indice] << endl;
-
-	if (saldos[indice] < 0)
-	{
-		cout << "ADVERTENCIA: El saldo es negativo" << endl;
-	}
-	cout << "--------------------------------" << endl;
 }

@@ -3,77 +3,85 @@
 void Banco::TransferirDinero()
 {
 	int cuentaOrigen, cuentaDestino;
-	double monto;
-	int indiceOrigen = -1;  
-	int indiceDestino = -1; 
+	double cantidad;
+	int indiceOrigen = -1;
+	int indiceDestino = -1;
 
 	if (CantidadDeCuentas < 2)
 	{
-		cout << "Se necesitan al menos dos cuentas para realizar una transferencia." << endl;
+		cout << "----------------------------------" << endl;
+		cout << "Se necesitan al menos 2 cuentas para poder transferir." << endl;
+		cout << "----------------------------------" << endl;
 		return;
 	}
+	system("cls");
+	cout << "--------------Realizar Transferencia--------------" << endl;
 
-	cout << "Ingrese el numero de la cuenta de origen: ";
-	cin >> cuentaOrigen;
+	// Bucle para validar la cuenta de origen. Se repetirá hasta que se encuentre una válida.
+	do {
+		cout << "Ingrese el numero de la cuenta de origen: ";
+		cin >> cuentaOrigen;
 
-	for (int i = 0; i < CantidadDeCuentas; i++)
-	{
-		if (numerosCuenta[i] == cuentaOrigen)
+		indiceOrigen = -1; // Reiniciamos por si el usuario se equivocó antes
+		for (int i = 0; i < CantidadDeCuentas; i++)
 		{
-			indiceOrigen = i;
-			break;
+			if (numerosCuenta[i] == cuentaOrigen)
+			{
+				indiceOrigen = i; // La cuenta es válida, guardamos su índice
+				break;
+			}
 		}
-	}
 
-	if (indiceOrigen == -1)
-	{
-		cout << "La cuenta de origen no existe." << endl;
-		return;
-	}
-
-	cout << "Ingrese el numero de la cuenta de destino: ";
-	cin >> cuentaDestino;
-
-	for (int i = 0; i < CantidadDeCuentas; i++)
-	{
-		if (numerosCuenta[i] == cuentaDestino)
+		if (indiceOrigen == -1) // Si el índice no cambió, la cuenta no existe
 		{
-			indiceDestino = i;
-			break;
+			cout << "Error: La cuenta de origen no existe. Intente de nuevo." << endl;
 		}
-	}
+	} while (indiceOrigen == -1); // Repetir mientras no se haya encontrado la cuenta
 
-	if (indiceDestino == -1)
-	{
-		cout << "La cuenta de destino no existe." << endl;
-		return;
-	}
+	// Bucle para validar la cuenta de destino.
+	do {
+		cout << "Ingrese el numero de la cuenta de destino: ";
+		cin >> cuentaDestino;
+		
+		indiceDestino = -1; // Reiniciamos
+		for (int j = 0; j < CantidadDeCuentas; j++)
+		{
+			if (numerosCuenta[j] == cuentaDestino)
+			{
+				indiceDestino = j; // La cuenta existe
+				break;
+			}
+		}
 
-	if (indiceOrigen == indiceDestino)
-	{
-		cout << "La cuenta de origen y destino no pueden ser la misma." << endl;
-		return;
-	}
+		if (indiceDestino == -1)
+		{
+			cout << "Error: La cuenta de destino no existe. Intente de nuevo." << endl;
+		}
+		else if (indiceDestino == indiceOrigen) // Verificamos que no sea la misma cuenta
+		{
+			cout << "Error: No puede transferir a la misma cuenta de origen. Intente de nuevo." << endl;
+			indiceDestino = -1; // Forzamos a que el bucle se repita
+		}
+	} while (indiceDestino == -1); // Repetir si la cuenta no se encontró o es la misma que el origen
 
-	cout << "Monto a transferir: ";
-	cin >> monto;
+	// Bucle para validar el monto.
+	do {
+		cout << "Monto a transferir (Saldo disponible: " << saldos[indiceOrigen] << "): ";
+		cin >> cantidad;
 
-	if (monto <= 0)
-	{
-		cout << "Monto no valido. Debe ser mayor que cero." << endl;
-		return;
-	}
+		if (cantidad <= 0)
+		{
+			cout << "Error: El monto debe ser un valor positivo. Intente de nuevo." << endl;
+		}
+		
+	} while (cantidad <= 0 ); // Repetir si el monto es inválido o insuficiente
 
-	if (saldos[indiceOrigen] < monto)
-	{
-		cout << "Saldo insuficiente en la cuenta de origen para realizar la transferencia." << endl;
-		return;
-	}
+	saldos[indiceOrigen] -= cantidad;
+	saldos[indiceDestino] += cantidad;
 
-	// 6. Ejecutar la transferencia (combinación de Retirar y Depositar)
-	saldos[indiceOrigen] -= monto;   // Lógica de RetirarDinero()
-	saldos[indiceDestino] += monto;  // Lógica de DepositarDinero()
-
+	agregarTransaccion(cuentaOrigen, cantidad, 0.0, saldos[indiceOrigen]);
+	agregarTransaccion(cuentaDestino, 0.0, cantidad, saldos[indiceDestino]);
+	
 	cout << "----------------------------------" << endl;
 	cout << "Transferencia realizada con exito." << endl;
 	cout << "Nuevo saldo en cuenta origen (" << cuentaOrigen << "): " << saldos[indiceOrigen] << endl;

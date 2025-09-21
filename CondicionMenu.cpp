@@ -7,22 +7,8 @@ void Banco::CondicionMenu()
 	switch (opsion)
 	{
 	case 1:
-		cout << "--------------Registrar Cuenta--------------" << endl;
-		cout << "Numero de cuentas a crear: ";
-		cin >> numACrear;
-		
-
-		for (int i = 0; i < numACrear; i++)
-		{
-			cout << "Numero de la cuenta: ";
-			cin >> numero_cuenta;
-			cout << "Nombre del titular de la cuenta: ";
-			cin >> nombre_titular;
-			cout << "Ingrese el saldo inicial: ";
-			cin >> saldo_inicial;
-
-			CrearCuenta(numero_cuenta, nombre_titular, saldo_inicial);
-		}
+		//"--------------Registrar Cuenta--------------"
+		CrearCuenta();
 		break;
 	case 2:
 		//--------------Depositar Dinero--------------
@@ -41,15 +27,16 @@ void Banco::CondicionMenu()
 		ListarCuentas();
 		break;
 	case 6:
-		cout << "--------------Historial de Transacciones--------------" << endl;
+		//cout << "--------------Historial de Transacciones--------------" << endl;
 		// Pendiente de Agregar
+		HistorialTransacciones();
 		break;
 	case 7:
-		cout << "--------------Verificar Estado de Cuenta--------------" << endl;
+		//cout << "--------------Verificar Estado de Cuenta--------------" << endl;
 		EstadoDeCuenta();
 		break;
 	case 8:
-		cout << "--------------Programa Finalizado--------------" << endl;
+		//cout << "--------------Programa Finalizado--------------" << endl;
 		FinalizarPrograma();
 		break;
 	default:

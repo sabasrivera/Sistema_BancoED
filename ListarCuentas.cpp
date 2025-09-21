@@ -5,9 +5,14 @@ void Banco::ListarCuentas()
 {
 	if (CantidadDeCuentas == 0)
 	{
+		cout << "----------------------------------" << endl;
 		cout << "No hay cuentas registradas" << endl;
+		cout << "----------------------------------" << endl;
 		return;
-	}else{
+	}
+	else
+	{
+		system("cls");
 		cout << "--------------Consultar Saldo--------------" << endl;
 		cout << "Numero de cuenta a consultar: ";
 		cin >> numero_cuenta;
@@ -16,14 +21,16 @@ void Banco::ListarCuentas()
 			if (numerosCuenta[i] == numero_cuenta)
 			{
 				cout << i + 1 << ". Numero de cuenta: " << numerosCuenta[i]
-				<< " | Titular: " << titulares[i]
-				<< " | Saldo: " << saldos[i] << endl;
+					 << " | Titular: " << titulares[i]
+					 << " | Saldo: " << saldos[i] << endl;
 			}
-			
-			
+			else
+			{
+				cout << "----------------------------------" << endl;
+				cout << "Error: La cuenta no existe" << endl;
+				cout << "----------------------------------" << endl;
+			}
 		}
 		cout << "-----------------------------------\n";
 	}
-
-	
 }
